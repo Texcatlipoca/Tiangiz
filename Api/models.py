@@ -32,7 +32,7 @@ class Address(models.Model):
     postalCode = models.IntegerField()
     country = models.CharField(max_length=50)
 
-class Account (models.Model):
+class Account(models.Model):
     accountid = models.AutoField(primary_key=True)
     number = models.IntegerField()
     type = models.CharField(max_length=50)
@@ -40,4 +40,19 @@ class Account (models.Model):
     street = models.CharField(max_length=50)
     postalCode = models.IntegerField()
     country = models.CharField(max_length=50)
+
+class Receipt(models.Model):
+    receiptid = models.AutoField(primary_key=True)
+    receiptDate = models.DateTimeField()
+    receiptNumber = models.IntegerField()
+    order = models.CharField(max_length=50)
+    passwordExpirationDate = models.DateTimeField()
+    loginStatus = models.BooleanField()
+
+class Payment(models.Model):
+    paymentid = models.DateTimeField()
+    paymentDate = models.DateTimeField()
+    amountPaid = models.IntegerField()
+    remainingBalance = models.IntegerField()
+    originalBalance = models.IntegerField()
 

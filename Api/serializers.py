@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CartItem, Login, Address, Account
+from .models import CartItem, Login, Address, Account, Payment, Receipt
 
 class CartItemSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -20,3 +20,14 @@ class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = ('number', 'type', 'state', 'street', 'postalcode', 'country')
+
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = ('paymentdate', 'amountpaid', 'remainingbalance', 'originalbalance')
+
+class ReceiptSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Receipt
+        fields = ('receiptdate', 'receiptnumber', 'order', 'passwordexpirationdate', 'loginstatus')
+
