@@ -21,7 +21,7 @@ def getCarItems(request):
 @api_view(['POST'])
 def createCartItem(request):
     cartItem = JSONParser().parse(request)
-    serialized_cartItem = LoginSerializer(data=cartItem)
+    serialized_cartItem = CartItemSerializer(data=cartItem)
     if serialized_cartItem.is_valid():
         serialized_cartItem.save()
         return JsonResponse(serialized_cartItem.data, status=status.HTTP_201_CREATED)
