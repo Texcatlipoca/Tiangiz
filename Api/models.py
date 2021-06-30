@@ -1,3 +1,4 @@
+from typing import Optional
 from django.db import models
 
 class Item(models.Model):
@@ -55,4 +56,11 @@ class Payment(models.Model):
     amountPaid = models.IntegerField()
     remainingBalance = models.IntegerField()
     originalBalance = models.IntegerField()
+
+# class Person(models.Model):
+#     personId = models.CharField(max_length=100)
+#     first = models.CharField(max_length=50)
+#     middle = models.CharField(max_length=20)
+#     last = models.CharField(max_length=50)
+#     phone = models.
 

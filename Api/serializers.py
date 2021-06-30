@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import CartItem, Login, Address, Account, Payment, Receipt
 
-class CartItemSerializer(serializers.HyperlinkedModelSerializer):
+class CartItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = CartItem
         fields =  ('name', 'description', 'price', 'type')

@@ -8,9 +8,24 @@ from django.http import HttpResponse
 from .serializers import CartItemSerializer, LoginSerializer, AddressSerializer, AccountSerializer
 from .models import CartItem, Login, Address, Account
 
-class CartItemViewSet(viewsets.ModelViewSet):
-    queryset = CartItem.objects.all().order_by('name')
-    serializer_class = CartItemSerializer
+# class CartItemViewSet(viewsets.ModelViewSet):
+#     queryset = CartItem.objects.all().order_by('name')
+#     serializer_class = CartItemSerializer
+
+@api_view(['GET'])
+def getCarItems(request):
+    items = CartItem.objects.all()
+    serializer = CartItemSerializer(items, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def createCartItem(request):
+    cartItem = JSONParser().parse(request)
+    serialized_cartItem = LoginSerializer(data=cartItem)
+    if serialized_cartItem.is_valid():
+        serialized_cartItem.save()
+        return JsonResponse(serialized_cartItem.data, status=status.HTTP_201_CREATED)
+    return JsonResponse(serialized_cartItem.data, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def LoginCollection(request):
