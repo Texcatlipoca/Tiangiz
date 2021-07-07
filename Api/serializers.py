@@ -4,7 +4,7 @@ from .models import CartItem, Login, Address, Account, Payment, Receipt
 class CartItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = CartItem
-        fields =  ('name', 'description', 'price', 'type')
+        fields =  ('itemId','name', 'description', 'price', 'type')
 
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:

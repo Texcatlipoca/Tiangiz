@@ -11,6 +11,7 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('cartitems', views.getCarItems, name="getCartItems"), 
-    path('createcartitem', views.createCartItem, name="createCartItem")
+    # path('cartitems/', views.getCarItems, name="getCartItems"), 
+    path('cartitems/<int:pk>', views.getCarItems, name="updateCarItems"),
+    path('cartitems/', views.getCarItems, name="getCarItems")
 ]

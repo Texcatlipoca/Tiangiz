@@ -2,6 +2,7 @@ from typing import Optional
 from django.db import models
 
 class Item(models.Model):
+    itemId = models.AutoField(primary_key=True)
     name = models.CharField(max_length=40)
     description = models.CharField(max_length=40)
     type = models.CharField(max_length=40)

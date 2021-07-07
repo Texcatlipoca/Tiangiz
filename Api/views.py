@@ -12,20 +12,32 @@ from .models import CartItem, Login, Address, Account
 #     queryset = CartItem.objects.all().order_by('name')
 #     serializer_class = CartItemSerializer
 
-@api_view(['GET'])
-def getCarItems(request):
-    items = CartItem.objects.all()
-    serializer = CartItemSerializer(items, many=True)
-    return Response(serializer.data)
+@api_view(['GET', 'POST', 'DELETE'])
+def getCarItems(request, pk=None):
+    print('PK 00000000000000000000000000000 ', pk)
+    if request.method == 'GET':
+        items = CartItem.objects.all()
+        serializer = CartItemSerializer(items, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        cartItem = JSONParser().parse(request)
+        serialized_cartItem = CartItemSerializer(data=cartItem)
+        if serialized_cartItem.is_valid():
+            serialized_cartItem.save()
+            return JsonResponse(serialized_cartItem.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(serialized_cartItem.data, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['POST'])
-def createCartItem(request):
-    cartItem = JSONParser().parse(request)
-    serialized_cartItem = CartItemSerializer(data=cartItem)
-    if serialized_cartItem.is_valid():
-        serialized_cartItem.save()
-        return JsonResponse(serialized_cartItem.data, status=status.HTTP_201_CREATED)
-    return JsonResponse(serialized_cartItem.data, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        try:
+            cartItem = CartItem.objects.get(itemId=pk)
+            print('CART ITEM: ', cartItem.itemId)
+        except CartItem.DoesNotExist:
+            return JsonResponse(status=status.HTTP_404_NOT_FOUND)
+        
+        # serialized_cartItem = CartItemSerializer(cartItem, many=True)
+        cartItem.delete()
+        return JsonResponse(cartItem, status=status.HTTP_200_OK, safe=False)
+
 
 @api_view(['GET'])
 def LoginCollection(request):
