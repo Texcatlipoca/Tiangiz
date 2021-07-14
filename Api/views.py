@@ -5,8 +5,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework import status
 from django.http.response import JsonResponse
 from django.http import HttpResponse
-from .serializers import CartItemSerializer, LoginSerializer, AddressSerializer, AccountSerializer
-from .models import CartItem, Login, Address, Account
+from .serializers import CartItemSerializer, LoginSerializer, AddressSerializer, AccountSerializer, PaymentSerializer, ReceiptSerializer
+from .models import CartItem, Login, Address, Account, Payment, Receipt
 
 # class CartItemViewSet(viewsets.ModelViewSet):
 #     queryset = CartItem.objects.all().order_by('name')
@@ -54,50 +54,73 @@ def getCarItems(request, pk=None):
 
 
 
-@api_view(['GET'])
-def LoginCollection(request):
+@api_view(['GET', 'POST'])
+def login_list(request):
     if request.method == 'GET':
         logins = Login.objects.all()
         serializer = LoginSerializer(logins, many=True)
         return Response(serializer.data)
 
-@api_view(['POST'])
-def createLogin(request):
-    login_data = JSONParser().parse(request)
-    serialized_login = LoginSerializer(data=login_data)
-    if serialized_login.is_valid():
-        serialized_login.save()
-        return JsonResponse(serialized_login.data, status=status.HTTP_201_CREATED)
-    return JsonResponse(serialized_login.data, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'POST':
+        serializer_login = LoginSerializer(data=request.data)
+        if serializer_login.is_valid():
+            serializer_login.save()
+            return Response(serializer_login.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_login.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET'])
-def AddressCollection(request):
+@api_view(['GET', 'POST'])
+def address_list(request):
     if request.method == 'GET':
-        adresses = Address.objects.all()
-        serializer = AddressSerializer(adresses, many=True)
+        addresses = Address.objects.all()
+        serializer = AddressSerializer(addresses, many=True)
         return Response(serializer.data)
 
-@api_view(['POST'])
-def createAddress(request):
-    address_data = JSONParser().parse(request)
-    serialized_address = AddressSerializer(data=address_data)
-    if serialized_address.is_valid():
-        serialized_address.save()
-        return JsonResponse(serialized_address.data, status=status.HTTP_201_CREATED)
-    return JsonResponse(serialized_address.data, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'POST':
+        serializer_address = AddressSerializer(data=request.data)
+        if serializer_address.is_valid():
+            serializer_address.save()
+            return Response(serializer_address.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_address.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET'])
-def AccountCollection(request):
+@api_view(['GET', 'POST'])    
+def account_list(request):
     if request.method == 'GET':
         accounts = Account.objects.all()
         serializer = AccountSerializer(accounts, many=True)
         return Response(serializer.data)
 
-@api_view(['POST'])
-def createAccount(request):
-    account_data = JSONParser().parse(request)
-    serialized_account = AccountSerializer(data=account_data)
-    if serialized_account.is_valid():
-        serialized_account.save()
-        return JsonResponse(serialized_account.data, status=status.HTTP_201_CREATED)
-    return JsonResponse(serialized_account.data, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'POST':
+        serializer_account = AccountSerializer(data=request.data)
+        if serializer_account.is_valid():
+            serializer_account.save()
+            return Response(serializer_account.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_account.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'POST'])    
+def payment_list(request):
+    if request.method == 'GET':
+        payments = Payment.objects.all()
+        serializer = PaymentSerializer(payments, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer_payment = PaymentSerializer(data=request.data)
+        if serializer_payment.is_valid():
+            serializer_payment.save()
+            return Response(serializer_payment.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_payment.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'POST'])    
+def receipt_list(request):
+    if request.method == 'GET':
+        receipts = Receipt.objects.all()
+        serializer = ReceiptSerializer(receipts, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer_receipt = ReceiptSerializer(data=request.data)
+        if serializer_receipt.is_valid():
+            serializer_receipt.save()
+            return Response(serializer_receipt.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_receipt.errors, status=status.HTTP_400_BAD_REQUEST)
+
