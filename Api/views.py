@@ -12,9 +12,8 @@ from .models import CartItem, Login, Address, Account
 #     queryset = CartItem.objects.all().order_by('name')
 #     serializer_class = CartItemSerializer
 
-@api_view(['GET', 'POST', 'DELETE'])
+@api_view(['GET', 'POST', 'DELETE', 'PUT'])
 def getCarItems(request, pk=None):
-    print('PK 00000000000000000000000000000 ', pk)
     if request.method == 'GET':
         items = CartItem.objects.all()
         serializer = CartItemSerializer(items, many=True)
@@ -37,6 +36,22 @@ def getCarItems(request, pk=None):
         # serialized_cartItem = CartItemSerializer(cartItem, many=True)
         cartItem.delete()
         return JsonResponse(cartItem, status=status.HTTP_200_OK, safe=False)
+
+    elif request.method == 'PUT':
+        try:
+            cartItem = CartItem.objects.get(itemId=pk)
+            print('CART ITEM: ', cartItem.itemId)
+        except CartItem.DoesNotExist:
+            return JsonResponse(status=status.HTTP_404_NOT_FOUND)
+
+        cartItem_data = JSONParser().parse(request)
+        serialized_cartItem_data = CartItemSerializer(cartItem, data=cartItem_data)
+        if serialized_cartItem_data.is_valid():
+            serialized_cartItem_data.save()
+            return JsonResponse(serialized_cartItem_data.data ,safe=False)
+        return JsonResponse(serialized_cartItem_data.errors, status=status.HTTP_400_BAD_REQUEST, safe=False)
+
+
 
 
 @api_view(['GET'])
