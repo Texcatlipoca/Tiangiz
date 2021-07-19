@@ -15,9 +15,15 @@ from .models import CartItem, Login, Address, Account, Payment, Receipt
 @api_view(['GET', 'POST', 'DELETE', 'PUT'])
 def getCarItems(request, pk=None):
     if request.method == 'GET':
-        items = CartItem.objects.all()
-        serializer = CartItemSerializer(items, many=True)
-        return Response(serializer.data)
+        if(pk is not None):
+            item = CartItem.objects.filter(pk=pk)
+            serialized_item = CartItemSerializer(item, many=True)
+            return JsonResponse(serialized_item.data, status=status.HTTP_200_OK, safe=False)
+            
+        else:
+            items = CartItem.objects.all()
+            serializer = CartItemSerializer(items, many=True)
+            return Response(serializer.data)
     elif request.method == 'POST':
         cartItem = JSONParser().parse(request)
         serialized_cartItem = CartItemSerializer(data=cartItem)
@@ -32,8 +38,7 @@ def getCarItems(request, pk=None):
             print('CART ITEM: ', cartItem.itemId)
         except CartItem.DoesNotExist:
             return JsonResponse(status=status.HTTP_404_NOT_FOUND)
-        
-        # serialized_cartItem = CartItemSerializer(cartItem, many=True)
+            
         cartItem.delete()
         return JsonResponse(cartItem, status=status.HTTP_200_OK, safe=False)
 
