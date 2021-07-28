@@ -12,5 +12,9 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('cartitems/<int:pk>', views.getCarItems, name="updateCarItems"),
-    path('cartitems/', views.getCarItems, name="getCarItems")
+    path('cartitems/', views.getCarItems, name="getCarItems"),
+    path('payments/<int:pk>', views.paymentHandler, name="updatePayment"),
+    path('payments/', views.paymentHandler, name="getPayments"),
+    path('accounts/<int:pk>', views.accountView, name="updateAccount"),
+    path('accounts/', views.accountView, name="getAccount")
 ]

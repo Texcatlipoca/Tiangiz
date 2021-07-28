@@ -19,12 +19,12 @@ class AddressSerializer(serializers.ModelSerializer):
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ('number', 'type', 'state', 'street', 'postalcode', 'country')
+        fields = ('accountId','accountNumber', 'type', 'status')
 
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
-        fields = ('paymentdate', 'amountpaid', 'remainingbalance', 'originalbalance')
+        fields = ('paymentId','paymentDate', 'amountPaid', 'remainingBalance', 'originalBalance')
 
 class ReceiptSerializer(serializers.ModelSerializer):
     class Meta:

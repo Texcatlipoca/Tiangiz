@@ -1,5 +1,8 @@
 from typing import Optional
 from django.db import models
+import json
+from json import JSONEncoder
+import datetime
 
 class Item(models.Model):
     itemId = models.AutoField(primary_key=True)
@@ -35,13 +38,11 @@ class Address(models.Model):
     country = models.CharField(max_length=50)
 
 class Account(models.Model):
-    accountid = models.AutoField(primary_key=True)
-    number = models.IntegerField()
+    accountId = models.AutoField(primary_key=True)
+    accountNumber = models.CharField(max_length=50)
     type = models.CharField(max_length=50)
-    state = models.CharField(max_length=50)
-    street = models.CharField(max_length=50)
-    postalCode = models.IntegerField()
-    country = models.CharField(max_length=50)
+    status = models.CharField(max_length=50)
+    
 
 class Receipt(models.Model):
     receiptid = models.AutoField(primary_key=True)
@@ -52,11 +53,18 @@ class Receipt(models.Model):
     loginStatus = models.BooleanField()
 
 class Payment(models.Model):
-    paymentid = models.DateTimeField()
+    paymentId = models.AutoField(primary_key=True)
     paymentDate = models.DateTimeField()
     amountPaid = models.IntegerField()
     remainingBalance = models.IntegerField()
-    originalBalance = models.IntegerField()
+    originalBalance = models.IntegerField()\
+
+class ModelEncoder(JSONEncoder):
+        def default(self, o):
+            if isinstance(o, (datetime.date, datetime.datetime)):
+                return o.isoformat()
+            else:
+                return o.__dict__
 
 # class Person(models.Model):
 #     personId = models.CharField(max_length=100)
