@@ -1,0 +1,10 @@
+Priority tasks: From 8/4 to 8/11
+1. (E)--Test all handlers from postman; all methods (POST,GET,PUT,DELETE)
+2. (M)--Research and Implement UnitTest for 1 handler (and present to other teammember)
+2.5 (E-M)--Implement UnitTest for all handlers 
+3. (M)--Refine data model
+4. (E)--Implement association for current models(1-1, many-many, many-one, etc)
+5. (M)--Write down detailed use case contracts (with pre and post conditions and assuptions) in a text format
+6. (M)--Intgrate mongodb to the API
+7. (E)--Research and implement debugging on Code IDE (for Django apps)
+8. (M)--Model use cases with usecase diagram and sequence diagram
