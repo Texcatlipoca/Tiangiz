@@ -9,12 +9,12 @@ class CartItemSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = Login
-        fields = ('username', 'password', 'inavlidlogintries', 'passwordexpirationdate', 'loginstatus')
+        fields = ('loginId','username', 'password', 'inavlidloginTries', 'passwordExpirationDate', 'loginStatus')
 
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        fields = ('type', 'state', 'street', 'postalcode', 'country')
+        fields = ('addressId','type', 'state', 'street', 'postalCode', 'country')
 
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
@@ -29,5 +29,5 @@ class PaymentSerializer(serializers.ModelSerializer):
 class ReceiptSerializer(serializers.ModelSerializer):
     class Meta:
         model = Receipt
-        fields = ('receiptdate', 'receiptnumber', 'order', 'passwordexpirationdate', 'loginstatus')
+        fields = ('receiptId','receiptDate', 'receiptNumber', 'order', 'passwordExpirationdate', 'loginStatus')
 

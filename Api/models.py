@@ -22,7 +22,7 @@ class InventoryItem(Item):
         return self.name, self.price
 
 class Login(models.Model):
-    loginid = models.AutoField(primary_key=True)
+    loginId = models.AutoField(primary_key=True)
     username = models.CharField(max_length=40)
     password = models.CharField(max_length=40)
     invalidLoginTries = models.IntegerField()
@@ -30,7 +30,7 @@ class Login(models.Model):
     loginStatus = models.BooleanField()
 
 class Address(models.Model):
-    addressid = models.AutoField(primary_key=True)
+    addressId = models.AutoField(primary_key=True)
     type = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
     street = models.CharField(max_length=50)
@@ -45,7 +45,7 @@ class Account(models.Model):
     
 
 class Receipt(models.Model):
-    receiptid = models.AutoField(primary_key=True)
+    receiptId = models.AutoField(primary_key=True)
     receiptDate = models.DateTimeField()
     receiptNumber = models.IntegerField()
     order = models.CharField(max_length=50)
