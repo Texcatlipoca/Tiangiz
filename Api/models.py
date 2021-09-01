@@ -13,11 +13,13 @@ class Item(models.Model):
 
 class CartItem(Item):
     price = models.DecimalField(decimal_places=2, max_digits=10)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='+')
     def __str_(self):
         return self.name, self.price
 
 class InventoryItem(Item):
     SKU = models.DecimalField(decimal_places=2, max_digits=10)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='+')
     def __str_(self):
         return self.name, self.price
 
@@ -42,7 +44,7 @@ class Account(models.Model):
     accountNumber = models.CharField(max_length=50)
     type = models.CharField(max_length=50)
     status = models.CharField(max_length=50)
-    
+    login = models.ForeignKey(Login, on_delete=models.CASCADE)
 
 class Receipt(models.Model):
     receiptId = models.AutoField(primary_key=True)
@@ -57,7 +59,8 @@ class Payment(models.Model):
     paymentDate = models.DateTimeField()
     amountPaid = models.IntegerField()
     remainingBalance = models.IntegerField()
-    originalBalance = models.IntegerField()\
+    originalBalance = models.IntegerField()
+    receipt = models.ForeignKey(Receipt, on_delete=models.CASCADE)
 
 class ModelEncoder(JSONEncoder):
         def default(self, o):

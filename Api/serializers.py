@@ -9,7 +9,7 @@ class CartItemSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = Login
-        fields = ('loginId','username', 'password', 'inavlidloginTries', 'passwordExpirationDate', 'loginStatus')
+        fields = ('loginid', 'username', 'password', 'invalidLoginTries', 'passwordExpirationDate', 'loginStatus')
 
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:

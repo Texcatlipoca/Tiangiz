@@ -89,14 +89,6 @@ def loginHandler(request, pk=None):
         except  Login.DoesNotExist:
             return JsonResponse(status=status.HTTP_404_NOT_FOUND)
 
-        login_data = JSONParser().parse(request)
-        serialized_login = LoginSerializer(login, data=login_data)
-        if serialized_login.is_valid():
-            serialized_login.save()
-            return JsonResponse(serialized_login.data ,safe=False)
-        return JsonResponse(serialized_login.errors, status=status.HTTP_400_BAD_REQUEST, safe=False)
-
-
 @api_view(['GET', 'POST', 'DELETE', 'PUT'])
 def addressHandler(request, pk=None):
     if request.method == 'GET':
