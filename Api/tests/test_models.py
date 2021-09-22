@@ -5,6 +5,7 @@ class CartItemModelTest(TestCase):
     
     @classmethod
     def setUpTestData(cls):
+        self.cartItem = CartItem()
         CartItem.objects.create(name='Galletas', description='Cookie snacks', type='Cookie', category='Snack', price = 2.99)
 
     def test_cartItem_name_value(self):
