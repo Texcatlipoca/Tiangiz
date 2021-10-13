@@ -13,13 +13,11 @@ class Item(models.Model):
 
 class CartItem(Item):
     price = models.DecimalField(decimal_places=2, max_digits=10)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='+')
     def __str_(self):
         return self.name, self.price
 
 class InventoryItem(Item):
     SKU = models.DecimalField(decimal_places=2, max_digits=10)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='+')
     def __str_(self):
         return self.name, self.price
 
@@ -30,6 +28,7 @@ class Login(models.Model):
     invalidLoginTries = models.IntegerField()
     passwordExpirationDate = models.DateTimeField(auto_now_add=True)
     loginStatus = models.BooleanField()
+    account = models.ForeignKey('Api.Account', on_delete=models.CASCADE)
 
 class Address(models.Model):
     addressId = models.AutoField(primary_key=True)
@@ -44,7 +43,7 @@ class Account(models.Model):
     accountNumber = models.CharField(max_length=50)
     type = models.CharField(max_length=50)
     status = models.CharField(max_length=50)
-    login = models.ForeignKey(Login, on_delete=models.CASCADE)
+    address = models.ForeignKey('Api.Address' , on_delete=models.CASCADE)
 
 class Receipt(models.Model):
     receiptId = models.AutoField(primary_key=True)
@@ -53,6 +52,7 @@ class Receipt(models.Model):
     order = models.CharField(max_length=50)
     passwordExpirationDate = models.DateTimeField()
     loginStatus = models.BooleanField()
+    payment = models.ForeignKey('Api.Payment' , on_delete=models.CASCADE)
 
 class Payment(models.Model):
     paymentId = models.AutoField(primary_key=True)
@@ -60,7 +60,6 @@ class Payment(models.Model):
     amountPaid = models.IntegerField()
     remainingBalance = models.IntegerField()
     originalBalance = models.IntegerField()
-    receipt = models.ForeignKey(Receipt, on_delete=models.CASCADE)
 
 class ModelEncoder(JSONEncoder):
         def default(self, o):
